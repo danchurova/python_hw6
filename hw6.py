@@ -13,22 +13,22 @@ def main():
     window.setWindowTitle("Gene Expression Omnibus Database GUI")
     window.show()
 
-    # [Add widgets to the widget]
 
-    # Create some widgets (these won't appear immediately):
     p_value = QLabel("p-value:")
     gseLabel = QLabel("GSE Number:")
     gseEdit = QLineEdit()
     genesLabel = QLabel("Signalling pathway genes names:")
     genesEdit = QLineEdit()
     def on_click():
+        print(gseEdit.text())
+        gse = GEOparse.get_GEO(geo='GSE'+str(gseEdit.text()), destdir= './')
+        print(gse.phenotype_data)
         p_value.setText("value")
     button = QPushButton('Search')
     button.setToolTip('This is an example button')
     button.clicked.connect(on_click)
 
 
-    # Put the widgets in a layout (now they start to appear):
     layout = QGridLayout(window)
     layout.addWidget(gseLabel, 0, 0)
     layout.addWidget(gseEdit, 0, 1)
@@ -36,18 +36,13 @@ def main():
     layout.addWidget(genesEdit, 1, 1)
     layout.addWidget(button, 2, 0)
     layout.addWidget(p_value, 2, 1)
-    # layout.setRowStretch(2, 1)
 
 
-    # [Resizing the window]
 
-    # Let's resize the window:
     window.resize(480, 160)
 
 
-    # [Run the application]
 
-    # Start the event loop...
     sys.exit(app.exec_())
 
 if __name__ == '__main__':
