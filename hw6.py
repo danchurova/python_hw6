@@ -10,7 +10,7 @@ def main():
 
     app = QApplication(sys.argv) #ignore()
     window = QWidget()
-    window.setWindowTitle("Hello World")
+    window.setWindowTitle("Gene Expression Omnibus Database GUI")
     window.show()
 
     # [Add widgets to the widget]
