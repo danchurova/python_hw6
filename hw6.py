@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 
 import sys
+import numpy as np
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QIcon
 import GEOparse
+import pandas as pd
+from scipy import stats
 
 def main():
 
@@ -20,10 +23,19 @@ def main():
     genesLabel = QLabel("Signalling pathway genes names:")
     genesEdit = QLineEdit()
     def on_click():
-        print(gseEdit.text())
+        genes=genesEdit.text().split(',')
         gse = GEOparse.get_GEO(geo='GSE'+str(gseEdit.text()), destdir= './')
-        print(gse.phenotype_data)
-        p_value.setText("value")
+        for gsm_name, gsm in gse.gsms.items():
+            print("Name: ", gsm_name)
+            print("Metadata:",)
+            for key, value in gsm.metadata.items():
+                print(" - %s : %s" % (key, ", ".join(value)))
+            print ("Table data:",)
+            print (gsm.table.head())
+            break
+        # p_val = stats.ks_2samp()[1]
+
+        # p_value.setText("p-value: "+ str(p_val)[:3])
     button = QPushButton('Search')
     button.setToolTip('This is an example button')
     button.clicked.connect(on_click)
